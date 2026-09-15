@@ -1,0 +1,14 @@
+{
+  "name": "beforeubereats",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A static, non-commercial public-interest site about the ethics of food delivery platforms in Australia.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node build.mjs && node --run serve:only",
+    "serve:only": "node server.mjs",
+    "check": "node build.mjs --check"
+  },
+  "engines": { "node": ">=20" }
+}
