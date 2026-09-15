@@ -16,7 +16,7 @@ export const page = {
   order: 70,
   title: 'Sources',
   description:
-    'Every source cited anywhere on beforeubereats.com, grouped by type, with the date each was published.',
+    'The item listing and official guidance behind this independent food-delivery price-display investigation.',
   render: ({ site }) => {
     const all = Object.entries(SOURCES).map(([key, s]) => ({ key, ...s }))
     const byGroup = new Map(GROUPS.map(([g]) => [g, []]))
@@ -43,7 +43,7 @@ export const page = {
       .map(
         ([g, label, blurb]) => `
     <h2 id="${g}">${label} <span class="u-count">${byGroup.get(g).length}</span></h2>
-    <p style="color:var(--ink-2);font-size:.92rem">${blurb}</p>
+    <p class="u-meta">${blurb}</p>
     ${renderList(byGroup.get(g))}`
       )
       .join('\n')
@@ -56,8 +56,8 @@ export const page = {
         meta: `<span>Reviewed ${site.updatedHuman}</span>`,
       }) +
       section(`
-<p>This site's rule is that every factual claim carries a citation, and the site will not build if a claim points at a source that does not exist. Primary sources — regulators, courts, legislation, coronial findings, government inquiries, peer-reviewed research and company filings — are preferred over news summaries.</p>
-<p>Where sources disagree, the site says so. Where a figure has changed over time, the date it applies to is stated alongside it. Links open on the publisher's own site; some may sit behind a paywall or may have moved since this page was reviewed.</p>
+<p>The recorded item listing supports the A$12 price and required choices. Ub*r e*ts guidance explains pickup fees, and the ACCC explains price-display rules and drip pricing. The build rejects a citation key that has no matching source; editorial review is still needed to make sure each claim is supported.</p>
+<p>Prices and menu choices may change after the recorded check. Links open on each publisher's own site and may have moved since this page was reviewed.</p>
 ${groups}
 ${ungrouped.length ? `<h2 id="other">Other</h2>${renderList(ungrouped)}` : ''}
 `)

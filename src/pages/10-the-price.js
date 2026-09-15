@@ -53,8 +53,7 @@ ${priceLadder({
 ${callout(
   'The arithmetic',
   `<p>Advertised: <strong>$12.00</strong>. Lowest selectable item price: <strong>$16.00</strong>. The required extras add <strong>33%</strong> to the displayed price, before a single fee is charged.</p>
-   <p>The badge on the tile says <strong>33% off</strong>. The required extras add <strong>33% on</strong>. The two cancel almost exactly.</p>
-   <p class="u-flush">That advertised discount is calculated from $18.00 down to a price no customer can obtain. Measured honestly &mdash; $18.00 down to the real floor of $16.00 &mdash; the saving is about <strong>11%</strong>.</p>`,
+   <p class="u-flush">The tile also showed a <strong>33% off</strong> badge, calculated from the displayed $18.00 and $12.00 figures${cite('m-brothers-plate')}. This check did not establish the former total price with the same required choices, so it does not calculate an effective discount.</p>`,
   'key'
 )}
 
@@ -91,7 +90,7 @@ ${compareTotals({
     'Pickup removes delivery and service fees, but not these required item choices. The $4 gap is in the item subtotal, before any other checkout charges.',
 })}
 
-<p>That is why the displayed $12.00 is misleading for this item as configured at the check: even when pickup removes delivery and service fees, the lowest selectable item price is still $16.00.</p>
+<p>In our view, a $12.00 menu tile could leave a misleading impression for this item as configured at the check: even when pickup removes delivery and service fees, the lowest selectable item price was still $16.00${cite('m-brothers-plate')}.</p>
 
 <h2 id="pattern">What one listing shows</h2>
 
@@ -100,8 +99,8 @@ ${compareTotals({
 <p>The ACCC says a displayed minimum price should include unavoidable extra costs, and describes gradually added charges as <strong>drip pricing</strong>${cite('accc-price-displays')}. Whether that guidance applies to these item choices, and who is responsible for the listing, still needs legal analysis.</p>
 
 ${callout(
-  'Still being checked',
-  '<p class="u-flush">The legal analysis of this pattern under the Australian Consumer Law &mdash; what the single price rule requires, who is responsible for a marketplace listing, and what has and has not been tested in court &mdash; is being verified against primary sources and will be published on <a href="/the-law/">The law</a>. This site will not state that any conduct is unlawful unless a court has so held or a statute plainly says so.</p>',
+  'What the evidence does not settle',
+  '<p class="u-flush">This documented price gap does not establish who configured the item choices, how often the pattern appears, or whether a court would find a breach of Australian Consumer Law. The linked item may have changed since the recorded check. Readers can inspect the sources and <a href="/about/">method</a> behind the comparison.</p>',
   'caution'
 )}
 `),

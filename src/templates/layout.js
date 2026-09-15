@@ -64,7 +64,7 @@ function references(refs) {
     <ol>
       ${items}
     </ol>
-    <p class="u-refnote">Links open on the publisher's own site. Where a figure has changed over time, the date it applies to is stated in the text. Found something out of date or wrong? <a href="/about/#corrections">Tell us and we will correct it.</a></p>
+    <p class="u-refnote">Links open on the publisher's own site. Prices and choices may have changed since the check date. Found an error? <a href="https://github.com/before-2026/before/issues/new" rel="nofollow noopener noreferrer" target="_blank">Open a public issue on GitHub</a> (account required).</p>
   </section>`
 }
 
@@ -77,8 +77,8 @@ function pageNav(site, pages, current) {
   if (!prev && !next) return ''
   return `
   <nav class="page-nav" aria-label="Section">
-    ${prev ? `<a href="/${prev.slug}/"><small>Previous</small>${esc(prev.label)}</a>` : '<span></span>'}
-    ${next ? `<a class="pn-next" href="/${next.slug}/"><small>Next</small>${esc(next.label)}</a>` : ''}
+    ${prev ? `<a href="${prev.slug ? `/${prev.slug}/` : '/'}"><small>Previous</small>${esc(prev.label)}</a>` : '<span></span>'}
+    ${next ? `<a class="pn-next" href="${next.slug ? `/${next.slug}/` : '/'}"><small>Next</small>${esc(next.label)}</a>` : ''}
   </nav>`
 }
 
@@ -123,7 +123,7 @@ export function layout({ site, pages, page, body, references: refs }) {
 <div class="notaffil">
   <div class="wrap notaffil__inner">
     <strong>You are not on an Uber website.</strong>
-    <span>This is an independent site about food delivery platforms, with no connection to Uber Technologies,&nbsp;Inc. Looking for the app? <a href="https://www.ubereats.com" rel="nofollow noopener noreferrer">ubereats.com</a></span>
+    <span>This is an independent site about food-delivery price displays, with no connection to Uber Technologies,&nbsp;Inc. Looking for the app? <a href="https://www.ubereats.com" rel="nofollow noopener noreferrer">ubereats.com</a></span>
   </div>
 </div>
 <a class="skip" href="#main">Skip to content</a>
@@ -154,25 +154,25 @@ ${!isHome ? `<div class="wrap"><div class="prose">${pageNav(site, pages, page.sl
         <p class="updated">Last reviewed ${esc(site.updatedHuman)}</p>
       </div>
       <div>
-        <h2>The issues</h2>
+        <h2>Explore</h2>
         <ul>
-          ${site.nav.slice(0, 5).map((n) => `<li><a href="/${n.slug}/">${esc(n.label)}</a></li>`).join('\n          ')}
+          <li><a href="/">Overview</a></li>
+          <li><a href="/the-price/">The A$12 case</a></li>
         </ul>
       </div>
       <div>
         <h2>This site</h2>
         <ul>
-          <li><a href="/what-you-can-do/">What you can do</a></li>
           <li><a href="/sources/">All sources</a></li>
           <li><a href="/about/">About &amp; method</a></li>
-          <li><a href="/about/#corrections">Corrections</a></li>
+          <li><a href="https://github.com/before-2026/before/issues/new" rel="nofollow noopener noreferrer" target="_blank">Flag an error</a></li>
         </ul>
       </div>
     </div>
 
     <div class="foot__legal">
       <p><strong>Not affiliated with Uber.</strong> ${esc(site.name)} is an independent, non-commercial site published in Australia. It is not associated with, endorsed by, or connected to Uber Technologies, Inc., Uber Australia Pty Ltd, or any of their related companies. References to Uber and its food-delivery service identify only the subjects of this independent commentary; no claim is made to their names or trade marks.</p>
-      <p>This site carries no advertising, no affiliate links, no sponsorship and no tracking, and it collects no personal information from visitors. Statements of fact are sourced to the linked material and are accurate as at the review date shown. Anything presented as opinion is identified as opinion and is based on the facts set out alongside it. See <a href="/about/">About &amp; method</a> for how the site is researched and how to request a correction.</p>
+      <p>This site carries no advertising, no affiliate links, no sponsorship and no tracking, and it collects no personal information from visitors. Its documented price example links to the recorded listing and official guidance. Prices and options may change after the check date. See <a href="/about/">About &amp; method</a> for how the example was researched.</p>
       <p>Content is offered for reuse under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener noreferrer" target="_blank">CC&nbsp;BY&nbsp;4.0</a>. Nothing here is legal, financial or employment advice.</p>
     </div>
   </div>

@@ -742,22 +742,21 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
    mistake this site for one of Uber's.
    -------------------------------------------------------------------------- */
 .notaffil {
-  background: var(--ink);
-  color: var(--paper);
+  background: #17140f;
+  color: #f3eee6;
   font-size: .8rem;
   line-height: 1.5;
   padding-block: .55rem;
 }
 .notaffil__inner { display: flex; flex-wrap: wrap; gap: .1rem .5rem; align-items: baseline; }
-.notaffil strong { color: var(--paper); font-weight: 700; }
-.notaffil span { color: color-mix(in srgb, var(--paper) 76%, transparent); }
-.notaffil a { color: var(--paper); text-decoration: underline; text-underline-offset: .15em; }
-.notaffil a:hover { color: var(--paper); }
-:root[data-theme='dark'] .notaffil,
-.notaffil { background: #17140f; }
+.notaffil strong { color: #ffffff; font-weight: 700; }
+.notaffil span { color: #e2d9cb; }
+.notaffil a { color: #ffffff; text-decoration: underline; text-underline-offset: .15em; }
+.notaffil a:hover { color: #ffffff; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .notaffil { background: #0d0b09; }
 }
+:root[data-theme='dark'] .notaffil { background: #0d0b09; }
 .masthead { top: 0; }
 
 /* --------------------------------------------------------------------------

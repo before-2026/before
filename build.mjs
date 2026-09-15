@@ -14,7 +14,9 @@ const { site } = await import('./src/data/site.js')
 const { SOURCES } = await import('./src/data/sources.js')
 const { layout } = await import('./src/templates/layout.js')
 
-const PAGE_FILES = (await readdir(join(SRC, 'pages'))).filter((f) => f.endsWith('.js')).sort()
+const PAGE_FILES = (await readdir(join(SRC, 'pages')))
+  .filter((f) => f.endsWith('.js') && !f.startsWith('zz-'))
+  .sort()
 
 const pages = []
 for (const file of PAGE_FILES) {

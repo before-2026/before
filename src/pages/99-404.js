@@ -15,7 +15,7 @@ export const page = {
   ${site.nav
     .map(
       (n) =>
-        `<li><a href="/${n.slug}/" class="u-plain">${n.label}</a></li>`
+        `<li><a href="${n.slug ? `/${n.slug}/` : '/'}" class="u-plain">${n.label}</a></li>`
     )
     .join('\n  ')}
 </ul>

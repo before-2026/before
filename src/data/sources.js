@@ -2,12 +2,6 @@
 // Rules: primary sources preferred; url must be one that actually loads;
 // `date` is the publication date when known, or the check date for a live listing.
 export const SOURCES = {
-  placeholder: {
-    title: 'Placeholder source',
-    publisher: 'Placeholder',
-    url: 'https://example.com/',
-    date: '2026',
-  },
   'm-brothers-plate': {
     title: 'Chargrill Kebab Plate — M Brothers Cafe & Restaurant item listing',
     publisher: 'Ub*r e*ts',

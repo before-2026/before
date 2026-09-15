@@ -1,10 +1,11 @@
 # beforeubereats.com
 
-An independent, non-commercial, Australian public-interest site about the real costs of
-food delivery platforms — for the riders, for the restaurants, and for the price you pay.
+An independent Australian site examining one documented food-delivery price display:
+a menu item shown at A$12 whose required choices made the lowest selectable item
+price A$16 at the recorded check.
 
 Static HTML. No dependencies, no build tooling to install, no tracking, no cookies,
-no third-party requests of any kind.
+no third-party requests on page load.
 
 ---
 
@@ -39,11 +40,12 @@ build.mjs             The generator.
 
 **Citations are the important part.** A page calls `cite('key')` inline; the build
 collects the keys in order of first appearance, numbers them, and renders a numbered
-reference list at the foot of that page. Cite an undefined key and **the build fails** —
-this is deliberate, so an unsourced claim can never reach the published site.
+reference list at the foot of that page. Cite an undefined key and **the build fails**.
+The build cannot tell whether an uncited factual sentence needs a source; that still
+requires editorial review.
 
 ```js
-`Commission on the standard tier is 30% of the order value${cite('accc-2019')}.`
+`The required sauce added at least A$1${cite('m-brothers-plate')}.`
 ```
 
 To change a claim's source, edit `src/data/sources.js` in one place.
@@ -55,32 +57,21 @@ about sources that are defined but never cited.
 
 ## Deploying to GitHub Pages
 
-### Option A — GitHub Actions (recommended)
+### GitHub Actions
 
-Already configured in `.github/workflows/deploy.yml`.
+The repository is `before-2026/before`. Its workflow file is
+`.github/workflows/nextjs.yml`; despite the inherited filename, it builds this
+plain-Node site and uploads `dist/`.
 
-1. Create a repository on GitHub and push:
-
-```bash
-git remote add origin https://github.com/YOUR-USERNAME/beforeubereats.git
-git push -u origin main
-```
-
-2. In the repo, go to **Settings → Pages → Build and deployment**, and set
-   **Source** to **GitHub Actions**.
-
-3. Every push to `main` now rebuilds and deploys. No secrets or tokens needed.
-
-### Option B — no Actions
-
-Build locally and commit `dist/` to a `gh-pages` branch, or remove `dist/` from
-`.gitignore` and point Pages at the `/docs` folder after renaming. Option A is less
-fuss.
+In **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
+Committing an edit to `main` runs the build and deployment. A branch source such as
+`main` → `/docs` does not contain this generator's output.
 
 ### Custom domain
 
-The `CNAME` file contains `beforeubereats.com` and is copied into `dist/` on every
-build. At your DNS provider, create:
+For an Actions deployment, set `beforeubereats.com` in **Settings → Pages → Custom
+domain**; GitHub ignores the repository's `CNAME` file for this setting. Then at
+your DNS provider, create:
 
 | Type | Name | Value |
 | --- | --- | --- |
@@ -88,11 +79,10 @@ build. At your DNS provider, create:
 | A | `@` | `185.199.109.153` |
 | A | `@` | `185.199.110.153` |
 | A | `@` | `185.199.111.153` |
-| CNAME | `www` | `YOUR-USERNAME.github.io` |
+| CNAME | `www` | `before-2026.github.io` |
 
-Then **Settings → Pages → Custom domain**, enter the domain, and once the check
-passes tick **Enforce HTTPS**. Certificate issuance usually takes a few minutes and
-occasionally up to 24 hours.
+Once GitHub's DNS check and certificate complete, tick **Enforce HTTPS**. DNS and
+certificate setup can take up to 24 hours.
 
 > Confirm the apex IP addresses against GitHub's current documentation before you
 > rely on them — GitHub has changed them before.
@@ -106,19 +96,20 @@ paths in `layout.js` adjusted.
 
 ## Editorial rules
 
-These are not style preferences. They are what keeps the site accurate and
-defensible — see `/about/` on the site itself, and `LEGAL.md`.
+These are the site's editorial standards; see `/about/` for the method and recorded
+limits of the A$12 example.
 
-1. **Every factual claim carries a citation.** The build enforces this.
-2. **Prefer primary sources** — regulators, courts, legislation, coronial findings,
-   government inquiries, peer-reviewed research, company filings — over news
-   summaries. Never cite forums, blogs or aggregators for a fact.
+1. **Support each factual claim.** The build validates citation keys; editorial
+   review checks whether a claim has adequate support.
+2. **Prefer primary sources.** This example links the item listing and official
+   platform and ACCC guidance.
 3. **State the date a figure applies to.** Where something has changed, say what it
    was and what it is now.
 4. **Do not overstate.** If a source supports a weaker claim, make the weaker claim.
    Avoid absolutes and avoid words implying criminality.
 5. **Separate fact from opinion,** and label opinion as opinion.
-6. **Include the company's response** where it has made one.
+6. **Consider corrections and responses** when the listing or relevant guidance
+   changes.
 7. **Own assets only.** No third-party photographs, no company logos, no app
    screenshots. Every graphic here is original CSS or SVG.
 8. **Correct promptly and visibly.** See the corrections policy on `/about/`.
