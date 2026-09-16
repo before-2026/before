@@ -23,6 +23,7 @@ Node 20 or newer. There is nothing to `npm install` — the generator is plain N
 | `npm run build` | Generate `dist/` |
 | `npm run check` | Validate pages and citations without writing files |
 | `npm run serve` | Build, then preview on `localhost:4321` |
+| `npm test` | Check generated Markdown and HTTP negotiation (build first) |
 
 ---
 
@@ -36,6 +37,9 @@ src/
   templates/          layout.js (the HTML shell) and components.js (reusable blocks).
   assets/             styles.css, site.js, favicon.svg — copied verbatim into dist/.
 build.mjs             The generator.
+src/markdown.js      Converts page bodies into compact Markdown with sources.
+src/negotiation.js   Accept/path/header helpers for the local preview server.
+edge/markdown-negotiation.mjs   Cloudflare Worker for the live domain.
 ```
 
 **Citations are the important part.** A page calls `cite('key')` inline; the build
@@ -52,6 +56,51 @@ To change a claim's source, edit `src/data/sources.js` in one place.
 
 `npm run check` also fails on sources missing a title or a non-absolute URL, and warns
 about sources that are defined but never cited.
+
+---
+
+## Markdown for agents
+
+`npm run build` writes `index.md` and a matching `index.md` beside each page's
+`index.html` in `dist/`. The Markdown is generated from the page body, with source
+links, review date and a readable version of the price comparison. It omits the
+browser navigation, disclaimer banner and decorative markup. New page components
+should be reviewed in both formats. `npm run check` validates the conversion;
+`npm test` checks the price example and response headers after a build.
+
+The preview server responds with Markdown from the **same page URL** when the
+request has `Accept: text/markdown`. Browsers continue to get HTML. GitHub Pages
+cannot negotiate on that header by itself: the site's existing Cloudflare proxy
+needs a Worker Route in front of the GitHub Pages origin. The Worker in
+`edge/markdown-negotiation.mjs` serves the generated `.md` file for the same URL
+and adds `Content-Type: text/markdown; charset=utf-8`, `Vary: Accept` and an
+approximate `x-markdown-tokens` count. All other page requests keep HTML; assets
+pass through. It can be deployed with Wrangler using `wrangler.jsonc`, or pasted
+as one file into a Worker in the Cloudflare dashboard.
+
+To activate it after uploading these code changes to GitHub and waiting for the
+Actions deployment to finish:
+
+1. Check that `https://beforeubereats.com/index.md` contains the generated text.
+2. In Cloudflare **Workers & Pages**, create a Worker, paste the contents of
+   `edge/markdown-negotiation.mjs` into its editor, and deploy it. The file is
+   self-contained, so dashboard editing needs no imports or build tooling.
+3. For that Worker, open **Settings → Domains & Routes → Add → Route**. Select
+   the `beforeubereats.com` zone and set the pattern to
+   `beforeubereats.com/*`. Keep the domain's DNS record proxied by Cloudflare.
+4. Verify both representations of the same URL:
+
+   ```bash
+   curl -i -H 'Accept: text/markdown' https://beforeubereats.com/the-price/
+   curl -i -H 'Accept: text/html' https://beforeubereats.com/the-price/
+   ```
+
+The first should have a `text/markdown` content type and the A$12 to A$16
+comparison; the second should have `text/html`. Both page responses should include
+`Vary: Accept`. If your Cloudflare zone has the native **Markdown for Agents**
+feature, enabling it in AI Crawl Control is another way to negotiate from HTML;
+the Worker supports zones without that feature and serves this site's edited
+Markdown rather than converting the full browser page.
 
 ---
 

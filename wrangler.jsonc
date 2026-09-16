@@ -1,0 +1,9 @@
+{
+  "name": "before-markdown-negotiation",
+  "main": "edge/markdown-negotiation.mjs",
+  "compatibility_date": "2026-09-16",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "beforeubereats.com/*", "zone_name": "beforeubereats.com" }
+  ]
+}

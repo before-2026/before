@@ -13,6 +13,7 @@ const CHECK_ONLY = process.argv.includes('--check')
 const { site } = await import('./src/data/site.js')
 const { SOURCES } = await import('./src/data/sources.js')
 const { layout } = await import('./src/templates/layout.js')
+const { markdownForPage } = await import('./src/markdown.js')
 
 const PAGE_FILES = (await readdir(join(SRC, 'pages')))
   .filter((f) => f.endsWith('.js') && !f.startsWith('zz-'))
@@ -90,8 +91,14 @@ for (const page of pages) {
     errors.push(`page "${page.slug}" failed to render: ${e.message}\n${e.stack}`)
     continue
   }
-  const html = layout({ ...ctx, body, references: cite.list() })
-  rendered.push({ page, html })
+  const references = cite.list()
+  const html = layout({ ...ctx, body, references })
+  try {
+    const markdown = markdownForPage({ body, page, site, references })
+    rendered.push({ page, html, markdown })
+  } catch (e) {
+    errors.push(`page "${page.slug}" failed to convert to Markdown: ${e.message}`)
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -121,7 +128,7 @@ if (CHECK_ONLY) {
 if (existsSync(OUT)) await rm(OUT, { recursive: true })
 await mkdir(OUT, { recursive: true })
 
-for (const { page, html } of rendered) {
+for (const { page, html, markdown } of rendered) {
   // 404 must sit at the root as 404.html for GitHub Pages to serve it.
   const outPath =
     page.slug === '' ? join(OUT, 'index.html')
@@ -129,6 +136,10 @@ for (const { page, html } of rendered) {
     : join(OUT, page.slug, 'index.html')
   await mkdir(dirname(outPath), { recursive: true })
   await writeFile(outPath, html, 'utf8')
+  const markdownPath = page.slug === '' ? join(OUT, 'index.md')
+    : page.slug === '404' ? join(OUT, '404.md')
+    : join(OUT, page.slug, 'index.md')
+  await writeFile(markdownPath, markdown, 'utf8')
 }
 
 // Static assets
